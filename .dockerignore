@@ -1,0 +1,11 @@
+models/
+logs/
+plots/
+media/
+.git/
+__pycache__/
+*.egg-info/
+*.pyc
+.env
+venv/
+.venv/
