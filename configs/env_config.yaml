@@ -1,0 +1,48 @@
+# ─── Double Inverted Pendulum — Environment Configuration ────────────────────
+#
+# All physical parameters for the Pymunk simulation.
+# Units: SI (metres, kilograms, seconds, radians).
+
+physics:
+  gravity: 9.81                # m/s²  (downward)
+  dt: 0.02                     # simulation timestep (s)  →  50 Hz Gym step
+  substeps: 5                  # Pymunk sub-steps per Gym step for stability
+
+cart:
+  mass: 1.0                    # kg
+  width: 0.4                   # m  (visual width)
+  height: 0.2                  # m  (visual height)
+  rail_limit: 2.4              # m  (±rail_limit from centre)
+  force_limit: 10.0            # N  (max absolute force the agent can apply)
+
+pole1:
+  mass: 0.5                    # kg
+  length: 0.5                  # m
+  thickness: 0.05              # m  (visual thickness)
+
+pole2:
+  mass: 0.5                    # kg
+  length: 0.5                  # m
+  thickness: 0.05              # m  (visual thickness)
+
+joints:
+  damping: 0.0                 # N·m·s/rad  (0 = no friction in joints)
+
+termination:
+  max_pole_angle: 0.418        # rad  (~24°) — episode ends if |θ| exceeds this
+  max_cart_displacement: 2.4   # m   — episode ends if |x| exceeds this
+
+episode:
+  max_steps: 1000              # truncation limit per episode
+
+reward:
+  alive_bonus: 1.0             # reward per step for staying alive
+  angle_penalty_coeff: 1.0     # multiplier for angle penalty
+  cart_penalty_coeff: 0.5      # multiplier for cart displacement penalty
+  velocity_penalty_coeff: 0.01 # multiplier for angular velocity penalty
+
+rendering:
+  screen_width: 800            # pixels
+  screen_height: 600           # pixels
+  fps: 50                      # target render FPS
+  scale: 150.0                 # pixels per metre

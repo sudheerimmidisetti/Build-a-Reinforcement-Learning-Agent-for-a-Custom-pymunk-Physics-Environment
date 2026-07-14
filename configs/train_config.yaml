@@ -1,0 +1,59 @@
+# ─── Double Inverted Pendulum — Training Configuration ───────────────────────
+
+algorithm: PPO                  # PPO | SAC | TD3
+
+seed: 42
+total_timesteps: 1_000_000
+n_envs: 4                      # number of parallel environments (DummyVecEnv)
+use_vec_normalize: true         # wrap envs in VecNormalize
+
+# ─── PPO Hyperparameters ────────────────────────────────────────────────────
+
+ppo:
+  learning_rate: 0.0003
+  n_steps: 2048
+  batch_size: 64
+  n_epochs: 10
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_range: 0.2
+  ent_coef: 0.0
+  vf_coef: 0.5
+  max_grad_norm: 0.5
+  policy: MlpPolicy
+  policy_kwargs:
+    net_arch:
+      pi: [256, 256]
+      vf: [256, 256]
+
+# ─── SAC Hyperparameters (alternative) ──────────────────────────────────────
+
+sac:
+  learning_rate: 0.0003
+  buffer_size: 1_000_000
+  learning_starts: 10_000
+  batch_size: 256
+  tau: 0.005
+  gamma: 0.99
+  ent_coef: auto
+  policy: MlpPolicy
+  policy_kwargs:
+    net_arch: [256, 256]
+
+# ─── Callbacks ──────────────────────────────────────────────────────────────
+
+callbacks:
+  eval_freq: 10_000            # evaluate every N steps
+  eval_episodes: 10            # episodes per evaluation
+  checkpoint_freq: 50_000      # save checkpoint every N steps
+  log_interval: 1              # log metrics every N updates
+  early_stop_reward: 950.0     # stop if mean eval reward exceeds this
+  early_stop_patience: 5       # number of evals without improvement before stop
+
+# ─── Paths ──────────────────────────────────────────────────────────────────
+
+paths:
+  model_dir: models
+  log_dir: logs
+  tensorboard_dir: logs/tensorboard
+  best_model_name: best_model
