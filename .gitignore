@@ -7,17 +7,34 @@ __pycache__/
 dist/
 build/
 *.whl
+*.so
 
 # ── Virtual environments ─────────────────────────────────────────────────
 venv/
 .venv/
 env/
+.conda/
 
-# ── Training artifacts ───────────────────────────────────────────────────
+# ── Training artifacts (large binary files) ──────────────────────────────
 models/
 logs/
 plots/
 media/*.gif
+*.zip
+*.pkl
+*.npz
+*.pt
+*.pth
+*.onnx
+
+# ── TensorBoard ──────────────────────────────────────────────────────────
+events.out.tfevents.*
+
+# ── Sensitive / secrets ──────────────────────────────────────────────────
+.env
+*.pem
+*.key
+*.secret
 
 # ── IDE ───────────────────────────────────────────────────────────────────
 .idea/
@@ -25,16 +42,31 @@ media/*.gif
 *.swp
 *.swo
 *~
+.project
+.settings/
+.classpath
 
 # ── OS ────────────────────────────────────────────────────────────────────
 .DS_Store
 Thumbs.db
 desktop.ini
+ehthumbs.db
 
-# ── Environment ──────────────────────────────────────────────────────────
-.env
+# ── Docker (local overrides) ─────────────────────────────────────────────
+docker-compose.override.yml
 
-# ── Temporary files ──────────────────────────────────────────────────────
+# ── Jupyter / IPython ────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ── Temporary / generated ────────────────────────────────────────────────
 *.tmp
 *.bak
 *.log
+*.cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+*.cover
