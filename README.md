@@ -206,23 +206,23 @@ docker compose run train python train.py --timesteps 1000000 --reward_type basel
 ```
 Build a Reinforcement Learning Agent for a Custom `pymunk` Physics Environment/
 ├── envs/
-│   ├── __init__.py              # Gymnasium registration
-│   └── environment.py           # DoublePendulumEnv (physics + rendering)
+│   ├── __init__.py
+│   └── environment.py
 ├── tests/
-│   ├── test_env.py              # Gymnasium API tests
-│   ├── test_physics.py          # Physics engine tests
-│   ├── test_training.py         # Training pipeline smoke tests
-│   └── test_evaluation.py       # Evaluation module tests
+│   ├── test_env.py
+│   ├── test_physics.py
+│   ├── test_training.py
+│   └── test_evaluation.py
 ├── configs/
-│   ├── env_config.yaml          # Environment parameters
-│   └── train_config.yaml        # Training hyperparameters
-├── train.py                     # PPO training entry point
-├── evaluate.py                  # Deterministic evaluation + GIF export
-├── plot_results.py              # Reward comparison plotting
-├── requirements.txt             # Pinned dependencies
-├── Dockerfile                   # Production container
-├── docker-compose.yml           # Service definitions
-├── .env.example                 # Configurable variables
+│   ├── env_config.yaml
+│   └── train_config.yaml
+├── train.py
+├── evaluate.py
+├── plot_results.py
+├── requirements.txt
+├── Dockerfile
+├── docker-compose.yml
+├── .env.example
 └── .gitignore
 ```
 
@@ -238,12 +238,3 @@ After 500k timesteps with shaped rewards, the agent typically learns to balance 
 The shaped agent develops a subtle rocking strategy — it makes small corrective forces to counteract the second pole's tendency to lag behind the first, rather than trying to hold everything perfectly still.
 
 ---
-
-## Future Improvements
-
-- **Domain randomisation** — vary pole lengths, masses, and friction during training to produce a more robust policy
-- **Curriculum learning** — start with a single pole, freeze that policy, then add the second pole
-- **SAC / TD3 comparison** — off-policy algorithms may be more sample-efficient on this continuous control task
-- **Energy-based reward** — penalise total system energy to encourage the agent to find the low-energy equilibrium
-- **3D extension** — move to a 3D pendulum with MuJoCo for a harder version of the problem
-- **Sim-to-real transfer** — add observation noise and action delay to train policies that might work on physical hardware
