@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+  # ── Headless training ──────────────────────────────────────────────────
+  train:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: ["train"]
+    volumes:
+      - ../models:/app/models
+      - ../logs:/app/logs
+    environment:
+      - SDL_VIDEODRIVER=dummy
+      - SDL_AUDIODRIVER=dummy
+
+  # ── Evaluation (headless) ──────────────────────────────────────────────
+  evaluate:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: ["evaluate"]
+    volumes:
+      - ../models:/app/models
+      - ../logs:/app/logs
+    environment:
+      - SDL_VIDEODRIVER=dummy
+      - SDL_AUDIODRIVER=dummy
+
+  # ── Render with display (requires X11 forwarding) ──────────────────────
+  render:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: ["render"]
+    volumes:
+      - ../models:/app/models
+    environment:
+      - DISPLAY=${DISPLAY:-:0}
+    # Uncomment for Linux X11 forwarding:
+    # volumes:
+    #   - /tmp/.X11-unix:/tmp/.X11-unix
+
+  # ── Generate plots ─────────────────────────────────────────────────────
+  plot:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: ["plot"]
+    volumes:
+      - ../logs:/app/logs
+      - ../plots:/app/plots
+    environment:
+      - SDL_VIDEODRIVER=dummy
+      - SDL_AUDIODRIVER=dummy
