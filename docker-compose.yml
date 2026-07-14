@@ -1,0 +1,29 @@
+services:
+
+  train:
+    build: .
+    command: ["train.py", "--timesteps", "500000", "--reward_type", "shaped"]
+    volumes:
+      - .:/app
+    environment:
+      - SDL_VIDEODRIVER=dummy
+      - SDL_AUDIODRIVER=dummy
+      - PYTHONUNBUFFERED=1
+
+  evaluate:
+    build: .
+    command: ["evaluate.py", "--model_path", "models/final_model.zip", "--gif_path", "media/agent_final.gif", "--episodes", "10"]
+    volumes:
+      - .:/app
+    environment:
+      - SDL_VIDEODRIVER=dummy
+      - SDL_AUDIODRIVER=dummy
+      - PYTHONUNBUFFERED=1
+
+  plot:
+    build: .
+    command: ["plot_results.py", "--baseline_log", "logs/baseline", "--shaped_log", "logs/shaped", "--output", "plots/reward_comparison.png"]
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
